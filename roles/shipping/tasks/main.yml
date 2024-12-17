@@ -5,14 +5,16 @@
 
 - name: Install MySQL Client
   ansible.builtin.dnf:
-    name: mysql
+    name:
+      - mysql
+      - python3-mysqlclient
     state: installed
 
 - name: Load Schema
   community.mysql.mysql_db:
     state: import
     name: all
-    target: app/db/schema.sql
+    target: /app/db/schema.sql
     login_host: mysql-dev.azdevopsb82.online
     login_user: root
     login_password: RoboShop@1
@@ -21,7 +23,7 @@
   community.mysql.mysql_db:
     state: import
     name: all
-    target: app/db/app-user.sql
+    target: /app/db/app-user.sql
     login_host: mysql-dev.azdevopsb82.online
     login_user: root
     login_password: RoboShop@1
@@ -30,7 +32,7 @@
   community.mysql.mysql_db:
     state: import
     name: all
-    target: app/db/master-data.sql
+    target: /app/db/master-data.sql
     login_host: mysql-dev.azdevopsb82.online
     login_user: root
     login_password: RoboShop@1
