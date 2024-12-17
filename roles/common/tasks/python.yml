@@ -1,20 +1,20 @@
-- name: Install Maven
+- name: Install Python
   ansible.builtin.dnf:
-    name: maven
+    name:
+      - gcc
+      - python3
+      - python3-devel
     state: installed
 
 - name: Import App Prerequisites
   ansible.builtin.include_tasks:
     file: app-prereq.yml
 
-- name: Install Maven dependencies
-  ansible.builtin.shell: mvn clean package ; mv target/{{ app_name }}-1.0.jar {{ app_name }}.jar
-  args:
-    chdir: /app
+- name: Install Python dependencies
+  ansible.builtin.pip:
+    requirements: /app/requirements.txt
 
 - name: SystemD Service Setup
   ansible.builtin.include_tasks:
     file: systemd.yml
-
-
 
