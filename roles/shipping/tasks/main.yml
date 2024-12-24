@@ -10,19 +10,25 @@
       - python3-mysqlclient
     state: installed
 
+# - name: Load Schema
+#   community.mysql.mysql_db:
+#     state: import
+#     name: all
+#     target: /app/db/{{ item }}.sql
+#     login_host: mysql-{{ ENV }}.azdevopsb82.online
+#     login_user: root
+#     login_password: RoboShop@1
+#   loop:
+#     - schema
+#     - app-user
+#     - master-data
+
 - name: Load Schema
-  community.mysql.mysql_db:
-    state: import
-    name: all
-    target: /app/db/{{ item }}.sql
-    login_host: mysql-{{ ENV }}.azdevopsb82.online
-    login_user: root
-    login_password: RoboShop@1
+  ansible.builtin.shell: mysql -h mysql-{{ ENV }}.azdevopsb82.online -uroot -pRoboShop@1 </app/db/{{ item }}.sql
   loop:
     - schema
     - app-user
     - master-data
-
 
 
 
