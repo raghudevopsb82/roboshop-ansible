@@ -4,13 +4,13 @@ Description=Payment Service
 [Service]
 User=root
 WorkingDirectory=/app
-Environment=CART_HOST=cart-{{ ENV }}.azdevopsb82.online
-Environment=CART_PORT=8080
-Environment=USER_HOST=user-{{ ENV }}.azdevopsb82.online
-Environment=USER_PORT=8080
-Environment=AMQP_HOST=rabbitmq-{{ ENV }}.azdevopsb82.online
-Environment=AMQP_USER=roboshop
-Environment=AMQP_PASS=roboshop123
+Environment=CART_HOST={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:CART_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=CART_PORT={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:CART_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=USER_HOST={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:USER_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=USER_PORT={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:USER_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=AMQP_HOST={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=AMQP_USER={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_USER token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=AMQP_PASS={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_PASS token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
 
 ExecStart=/usr/local/bin/uwsgi --ini payment.ini
 ExecStop=/bin/kill -9 $MAINPID

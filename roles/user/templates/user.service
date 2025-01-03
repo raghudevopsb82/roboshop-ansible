@@ -2,9 +2,9 @@
 Description = User Service
 [Service]
 User=roboshop
-Environment=MONGO=true
-Environment=REDIS_URL='redis://redis-{{ ENV }}.azdevopsb82.online:6379'
-Environment=MONGO_URL="mongodb://mongodb-{{ ENV }}.azdevopsb82.online:27017/users"
+Environment=MONGO="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/user:MONGO token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+Environment=REDIS_URL="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/user:REDIS_URL token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+Environment=MONGO_URL="{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/user:MONGO_URL token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=user
 

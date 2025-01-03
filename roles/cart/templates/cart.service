@@ -2,9 +2,9 @@
 Description = Cart Service
 [Service]
 User=roboshop
-Environment=REDIS_HOST=redis-{{ ENV }}.azdevopsb82.online
-Environment=CATALOGUE_HOST=catalogue-{{ ENV }}.azdevopsb82.online
-Environment=CATALOGUE_PORT=8080
+Environment=REDIS_HOST={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/cart:REDIS_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=CATALOGUE_HOST={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/cart:CATALOGUE_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
+Environment=CATALOGUE_PORT={{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/cart:CATALOGUE_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=cart
 
