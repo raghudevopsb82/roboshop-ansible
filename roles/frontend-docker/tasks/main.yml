@@ -10,13 +10,16 @@
     ports:
      - "80:80"
     env:
-      CATALOGUE_HOST: "true"
-      CATALOGUE_PORT: "whatever"
-      USER_HOST: "whatever"
-      USER_PORT: "whatever"
-      CART_HOST: "whatever"
-      CART_PORT: "whatever"
-      SHIPPING_HOST: "whatever"
-      SHIPPING_PORT: "whatever"
-      PAYMENT_HOST: "whatever"
-      PAYMENT_PORT: "whatever"
+      CATALOGUE_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:CATALOGUE_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      CATALOGUE_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:CATALOGUE_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      USER_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:USER_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      USER_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:USER_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      CART_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:CART_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      CART_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:CART_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      SHIPPING_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:SHIPPING_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      SHIPPING_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:SHIPPING_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      PAYMENT_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:PAYMENT_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      PAYMENT_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/frontend:PAYMENT_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+
+
+
