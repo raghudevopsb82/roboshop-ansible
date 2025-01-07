@@ -3,3 +3,27 @@
     name: common
     tasks_from: docker-ce-install
 
+- name: Start App container
+  community.docker.docker_container:
+    name: catalogue
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/catalogue
+    ports:
+     - "8080:8080"
+    env:
+      MONGO: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:MONGO token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      MONGO_URL: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:MONGO_URL token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+
+
+docker run -e DB_TYPE=mongo -e APP_GIT_URL=https://github.com/roboshop-devops-project-v3/catalogue -e DB_HOST=mongo-ip -e SCHEMA_FILE=db/master-data.js public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+
+- name: Schema container
+  community.docker.docker_container:
+    name: catalogue-schema
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/schema-load
+    env:
+      DB_TYPE: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:DB_TYPE token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      APP_GIT_URL: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:APP_GIT_URL token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      DB_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:DB_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      SCHEMA_FILE: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/catalogue:SCHEMA_FILE token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+
+
