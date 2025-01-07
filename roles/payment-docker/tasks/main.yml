@@ -3,3 +3,18 @@
     name: common
     tasks_from: docker-ce-install
 
+- name: Start App container
+  community.docker.docker_container:
+    name: payment
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/payment
+    ports:
+     - "8080:8080"
+    env:
+      CART_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:CART_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      CART_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:CART_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      USER_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:USER_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      USER_PORT: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:USER_PORT token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      AMQP_HOST: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_HOST token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      AMQP_USER: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_USER token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+      AMQP_PASS: "{{ lookup('community.hashi_vault.hashi_vault', 'secret=roboshop-{{ ENV }}/payment:AMQP_PASS token={{ vault_token }} url=http://vault-internal.azdevopsb82.online:8200') }}"
+
