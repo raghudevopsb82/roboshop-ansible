@@ -5,8 +5,8 @@
 
 - name: Start App container
   community.docker.docker_container:
-    name: catalogue
-    image: public.ecr.aws/w8x4g9h7/roboshop-v3/catalogue
+    name: user
+    image: public.ecr.aws/w8x4g9h7/roboshop-v3/user
     ports:
      - "8080:8080"
     env:
