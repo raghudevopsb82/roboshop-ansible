@@ -4,3 +4,15 @@
     dest: /opt
     remote_src: yes
 
+- name: Copy SystemD service file
+  ansible.builtin.template:
+    src: node-exporter.service
+    dest: /etc/systemd/system/node-exporter.yml
+
+- name: Start exporter
+  ansible.builtin.systemd_service:
+    name: node-exporter
+    state: restarted
+    enabled: true
+    daemon_reload: true
+
