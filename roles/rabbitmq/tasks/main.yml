@@ -24,6 +24,11 @@
     write_priv: .*
     state: present
 
+- name: Install prometheus node exporter
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: prometheus-node-exporter
+
 
 
 
